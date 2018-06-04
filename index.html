@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Time bug tester</title>
+        <script src="https://momentjs.com/downloads/moment.js"></script>
         <style type="text/css">
         body {
             padding: 24px;
@@ -33,21 +34,38 @@
         <script>
             var divTest1 = document.getElementById('test1');
             var divTest2 = document.getElementById('test2');
-            var deliverucheDate = new Date("2018-06-05T16:00:00+02:00");
-            if (deliverucheDate.getHours() === 16) {
+
+            function addMinutesToTimeString(hhmmss, minutesToAdd) {
+                // Build a real Date object to make addition easier and safer
+                const date = moment(`${new Date().toISOString().split('T')[0]}T${hhmmss}`);
+                const newDate = date.add(minutesToAdd, 'minute');
+                return newDate.format('HH:mm:ss');
+            }
+
+            function addMinutes(dateTime, minutesToAdd) {
+                return new Date(new Date(dateTime).getTime() + 1000 * 60 * minutesToAdd);
+            }
+
+            function pad(number) {
+                return number < 10 ? "0" + number : number + "";
+            }
+
+            var deliveruche = addMinutes("2018-06-05T16:00:00+02:00", 60);
+            if (deliveruche.getHours() === 17) {
                 divTest1.className = "green";
                 divTest1.innerHTML = "Test 1: OK";
             } else {
                 divTest1.className = "red";
                 divTest1.innerHTML = "Test 1: KO (expected 16, got " + deliverucheDate.getHours() + ")";
             }
-            var minirucheDate = new Date(new Date().toISOString().split('T')[0] + 'T16:00:00');
-            if (minirucheDate.getHours() === 16) {
+
+            var miniruche = addMinutesToTimeString('16:00:00', 60);
+            if (miniruche === '17:00:00') {
                 divTest2.className = "green";
                 divTest2.innerHTML = "Test 2: OK";
             } else {
                 divTest2.className = "red";
-                divTest2.innerHTML = "Test 2: KO (expected 16, got " + minirucheDate.getHours() + ")";
+                divTest2.innerHTML = "Test 2: KO (expected '17:00:00', got '" + miniruche + "')";
             }
         </script>
     </body>
