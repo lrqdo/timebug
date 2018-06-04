@@ -37,9 +37,7 @@
 
             function addMinutesToTimeString(hhmmss, minutesToAdd) {
                 // Build a real Date object to make addition easier and safer
-                const date = moment(`${new Date().toISOString().split('T')[0]}T${hhmmss}`);
-                const newDate = date.add(minutesToAdd, 'minute');
-                return newDate.format('HH:mm:ss');
+                return moment(hhmmss, 'HH:mm:ss').add(minutesToAdd, 'minute').format('HH:mm:ss');
             }
 
             function addMinutes(dateTime, minutesToAdd) {
