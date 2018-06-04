@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Time bug tester</title>
+        <style type="text/css">
+        body {
+            padding: 24px;
+            font-family: sans-serif;
+            width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        div {
+            padding: 12px;
+        }
+        .green {
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+        </style>
+    </head>
+    <body>
+        <p>
+            Bienvenue sur la page de test du bug <a href="https://app.asana.com/0/158621828135298/657331489042921">657331489042921</a>.
+            Cette page va effectuer quelques tests dans votre navigateur. Si certains sont rouges, merci de me contacter sur
+            <a href="https://mamassembly.slack.com/messages/D18U4JDEW/details/">Slack</a>.
+        </p>
+        <div id='test1'></div>
+        <div id='test2'></div>
+        <script>
+            var divTest1 = document.getElementById('test1');
+            var divTest2 = document.getElementById('test2');
+            var deliverucheDate = new Date("2018-06-05T16:00:00+02:00");
+            if (deliverucheDate.getHours() === 16) {
+                divTest1.className = "green";
+                divTest1.innerHTML = "Test 1: OK";
+            } else {
+                divTest1.className = "red";
+                divTest1.innerHTML = "Test 1: KO (expected 16, got " + deliverucheDate.getHours() + ")";
+            }
+            var minirucheDate = new Date(new Date().toISOString().split('T')[0] + 'T16:00:00');
+            if (minirucheDate.getHours() === 16) {
+                divTest2.className = "green";
+                divTest2.innerHTML = "Test 2: OK";
+            } else {
+                divTest2.className = "red";
+                divTest2.innerHTML = "Test 2: KO (expected 16, got " + minirucheDate.getHours() + ")";
+            }
+        </script>
+    </body>
+</html>
